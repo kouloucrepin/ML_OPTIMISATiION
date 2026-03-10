@@ -47,30 +47,47 @@ La méthodologie repose sur un protocole de **Random Search** sur l'espace des h
 G05_AGNews/
 │
 ├── run_experiments.sh              ← Orchestrateur CLI principal
-├── requirements.txt                ← Dépendances Python
+├── requirements.txt                ← Dépendances Python (entraînement)
+├── requirent_dash.txt              ← Dépendances Python (dashboard)
 ├── README.md                       ← Ce fichier
+├── LICENSE                         ← Licence MIT
 ├── dashboard_g05_enhanced.py       ← Dashboard interactif Plotly Dash
 │
+├── assets/
+│   └── rapport.pdf                 ← Rapport PDF du projet (téléchargeable)
+│
 ├── src/
+│   ├── __init__.py
 │   ├── config.py                   ← Configuration centralisée (presets CPU/GPU)
 │   ├── data_loader.py              ← Chargement AG News + undersampling équilibré
-│   ├── model_setup.py              ← DistilBERT + construction des optimiseurs
-│   ├── train.py                    ← Boucle d'entraînement (gradient clipping, early stopping)
+│   └── model_setup.py              ← DistilBERT + construction des optimiseurs
+│
+├── optimiseurs/
+│   ├── __init__.py
+│   ├── __pycache__/
 │   ├── random_search.py            ← Moteur Random Search + journalisation
+│   ├── train.py                    ← Boucle d'entraînement (gradient clipping, early stopping)
 │   └── visualization.py           ← Génération des figures statiques
 │
 ├── notebooks/
-│   └── G05_full_analysis.ipynb    ← Notebook d'analyse complet (papermill)
+│   ├── G05_full_analysis.ipynb    ← Notebook principal d'analyse (papermill)
+│   └── start.ipynb                ← Notebook de démarrage / exploration
+│
+├── logs/                           ← Logs d'exécution papermill + matrice expériences
+│   ├── experiment_matrix_<date>.csv
+│   └── papermill_<date>.log
 │
 ├── results/                        ← Généré à l'exécution
-│   ├── logs/                       ← CSV + JSON des expériences
+│   ├── checkpoints/                ← Points de sauvegarde intermédiaires
 │   ├── figures/                    ← Visualisations PNG
-│   └── models/                     ← Poids des meilleurs modèles (.pt)
+│   ├── logs/                       ← CSV + JSON des expériences (Random Search)
+│   ├── models/                     ← Poids des meilleurs modèles (.pt)
+│   └── notebooks/                  ← Notebooks exécutés par papermill
 │
 └── backups/                        ← Généré si --backup true
     ├── configs/
-    ├── results/
-    └── models/
+    ├── models/
+    └── results/
 ```
 
 ### Système de Configuration
@@ -93,6 +110,8 @@ cfg = get_config("gpu")       # GPU ≥ 4 Go  | 30 trials | ~30 min
 | `TrainingConfig` | Entraînement | `max_steps=500`, `patience=3`, `grad_clip=1.0` |
 | `SearchConfig` | Espace Random Search | `n_trials=20`, `lr_range=[1e-6, 5e-4]` |
 | `LandscapeConfig` | Loss landscape | `epsilon=0.5`, `n_points=20` |
+
+> **Organisation des modules :** `src/` contient la configuration et le chargement des données ; `optimiseurs/` contient la logique d'entraînement, le Random Search et les visualisations.
 
 ---
 
@@ -313,7 +332,7 @@ Un dashboard analytique complet est disponible via **Plotly Dash**, avec support
 
 ```bash
 # Installer les dépendances spécifiques au dashboard
-pip install dash plotly pandas numpy scipy
+pip install -r requirent_dash.txt
 
 # Lancer le dashboard
 python dashboard_g05_enhanced.py
@@ -469,23 +488,26 @@ python --version          # Doit afficher 3.11.x
 python -m venv venv
 source venv/bin/activate  # ou .\venv\Scripts\Activate.ps1 sur Windows
 
-# 3. Installer les dépendances
+# 3. Installer les dépendances d'entraînement
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# 4. Vérifier l'installation complète
+# 4. Installer les dépendances du dashboard
+pip install -r requirent_dash.txt
+
+# 5. Vérifier l'installation complète
 python -c "import torch, transformers, datasets, dash, plotly; print('✅ Tout est OK')"
 
-# 5. Rendre le script exécutable
+# 6. Rendre le script exécutable
 chmod +x run_experiments.sh
 
-# 6. Valider le pipeline (test rapide)
+# 7. Valider le pipeline (test rapide)
 ./run_experiments.sh --mode cpu_low --run setup
 
-# 7. Lancer les expériences
+# 8. Lancer les expériences
 ./run_experiments.sh --mode cpu_mid --run full
 
-# 8. Visualiser les résultats
+# 9. Visualiser les résultats
 python dashboard_g05_enhanced.py  # → http://127.0.0.1:8050
 ```
 
