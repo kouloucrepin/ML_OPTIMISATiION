@@ -1,0 +1,301 @@
+Input Notebook:  ./notebooks/G05_full_analysis.ipynb
+Output Notebook: ./results/notebooks/G05_executed_20260310_111334.ipynb
+Working directory: C:/Users/Ultra Tech/Desktop/audrey/ML OPTIMISATION/G05_AGNews
+Passed unknown parameter: MODE
+Input notebook does not contain a cell with tag 'parameters'
+Executing notebook with kernel: python3
+Executing Cell 1---------------------------------------
+Ending Cell 1------------------------------------------
+Executing Cell 2---------------------------------------
+Ending Cell 2------------------------------------------
+Executing Cell 3---------------------------------------
+Ending Cell 3------------------------------------------
+Executing Cell 4---------------------------------------
+\U0001f4c1 Racine projet   : C:\Users\Ultra Tech\Desktop\audrey\ML OPTIMISATION
+\U0001f4c2 Dossier courant : C:\Users\Ultra Tech\Desktop\audrey\ML OPTIMISATION
+
+
+\u2705 Versions installées :
+   torch        : 2.2.2+cpu
+   transformers : 4.57.3
+   datasets     : 4.4.2
+   sklearn      : 1.8.0
+   Device       : \U0001f535 CPU
+
+\u2705 Modules projet importés avec succès
+
+Ending Cell 4------------------------------------------
+Executing Cell 5---------------------------------------
+['backups', 'G05_AGNews', 'logs', 'rapport.docx', 'results']
+Ending Cell 5------------------------------------------
+Executing Cell 6---------------------------------------
+=======================================================
+  PROJET   : G05_AGNews_DistilBERT_P01
+  DEVICE   : cpu
+  DATASET  : ag_news (4 classes)
+  MODÈLE   : distilbert-base-uncased
+  RUNS     : 20 trials Random Search
+  OPTIM.   : adamw, sgd, adafactor
+  MAX STEPS: 100
+  LR RANGE : [1e-06, 5e-04]
+  SEED     : 42
+=======================================================
+
+\u2705 Configuration prête | Dossiers créés
+
+Ending Cell 6------------------------------------------
+Executing Cell 7---------------------------------------
+Ending Cell 7------------------------------------------
+Executing Cell 8---------------------------------------
+Chargement AG News depuis HuggingFace...
+  Chargement AG News depuis HuggingFace...
+
+  Train : 120000 exemples
+  Test  : 7600 exemples
+
+\U0001f4ca Dataset complet :
+   Train : 120,000 exemples
+   Test  : 7,600 exemples
+   Classes : ['World', 'Sports', 'Business', 'Sci/Tech']
+
+<Figure size 1690x520 with 2 Axes>
+\u2705 Figure 0 sauvegardée \u2192 results/figures/00_data_exploration.png
+
+Ending Cell 8------------------------------------------
+Executing Cell 9---------------------------------------
+\U0001f4f0 Exemples d'articles par classe
+
+  [BUSINESS]
+  Wall St. Bears Claw Back Into the Black (Reuters) Reuters - Short-sellers, Wall Street's dwindling\band of ultra-cynics, are seeing green again....
+
+  [SCI/TECH]
+  'Madden,' 'ESPN' Football Score in Different Ways (Reuters) Reuters - Was absenteeism a little high\on Tuesday among the guys at the office? EA Sports would like\to think it was because "Madden NFL 2005" came out that da...
+
+  [SPORTS]
+  Phelps, Thorpe Advance in 200 Freestyle (AP) AP - Michael Phelps took care of qualifying for the Olympic 200-meter freestyle semifinals Sunday, and then found out he had been added to the American team for the evening's ...
+
+  [WORLD]
+  Venezuelans Vote Early in Referendum on Chavez Rule (Reuters) Reuters - Venezuelans turned out early\and in large numbers on Sunday to vote in a historic referendum\that will either remove left-wing President Hugo Chavez...
+
+
+Ending Cell 9------------------------------------------
+Executing Cell 10--------------------------------------
+Préparation datasets (sous-échantillonnage équilibré + tokenisation)...
+  100 exemples × 4 classes = 400 train
+  max_length = 128 tokens (économie mémoire CPU)
+
+
+[DATA] Chargement AG News...
+  Chargement AG News depuis HuggingFace...
+
+  Train : 120000 exemples
+  Test  : 7600 exemples
+[DATA] Sous-échantillonnage (mode: cpu)
+       Train : 100 × 4 classes = 400
+       Val   : 50 × 4 classes = 200
+       Test  : 50 × 4 classes = 200
+
+[DATA] Tokenisation avec distilbert-base-uncased (max_length=128)...
+
+[DATA] Datasets prêts \u2713
+[DATA] Stats sauvegardées \u2192 C:\Users\Ultra Tech\Desktop\audrey\ML OPTIMISATION\G05_AGNews\results\logs\data_stats.json
+\u2705 Datasets tokenisés :
+   Train : 400 exemples
+   Val   : 200 exemples
+   Test  : 200 exemples
+
+   item[0] keys         : ['input_ids', 'attention_mask', 'labels']
+   input_ids shape      : torch.Size([128])
+   attention_mask shape : torch.Size([128])
+   label                : 1 (Sports)
+
+Ending Cell 10-----------------------------------------
+Executing Cell 11--------------------------------------
+Ending Cell 11-----------------------------------------
+Executing Cell 12--------------------------------------
+Device : cpu
+Chargement de distilbert-base-uncased...
+
+
+`torch_dtype` is deprecated! Use `dtype` instead!
+
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+Threads CPU : 4
+\u2705 Modèle chargé : DistilBertForSequenceClassification
+   Paramètres totaux       : 66,956,548
+   Paramètres entraînables : 66,956,548
+   Num labels              : 4
+   Tokenizer               : DistilBertTokenizerFast
+
+Ending Cell 12-----------------------------------------
+Executing Cell 13--------------------------------------
+Architecture DistilBERT :
+   distilbert                     : 66,362,880 paramètres
+   pre_classifier                 :    590,592 paramètres
+   classifier                     :      3,076 paramètres
+   dropout                        :          0 paramètres
+
+Ending Cell 13-----------------------------------------
+Executing Cell 14--------------------------------------
+Ending Cell 14-----------------------------------------
+Executing Cell 15--------------------------------------
+Test des 3 optimiseurs (Problématique P01)
+
+
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+  AdamW                  \u2192 AdamW                | 2 groupes \u2713
+
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+  SGD + Nesterov         \u2192 SGD                  | 1 groupes \u2713
+
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+  Adafactor              \u2192 Adafactor            | 1 groupes \u2713
+
+\U0001f4da Justifications théoriques (P01) :
+  AdamW     \u2192 Standard fine-tuning Transformers (Loshchilov & Hutter, 2019)
+            \u2192 Corrige le weight decay d'Adam classique
+  SGD       \u2192 Minima potentiellement plus plats (Keskar et al., 2017)
+            \u2192 Meilleure généralisation mais plus difficile à tuner
+  Adafactor \u2192 Mémoire réduite O(n+m) vs O(n×m) (Shazeer & Stern, 2018)
+            \u2192 Idéal pour CPU avec RAM limitée
+
+Ending Cell 15-----------------------------------------
+Executing Cell 16--------------------------------------
+Ending Cell 16-----------------------------------------
+Executing Cell 17--------------------------------------
+\u2705 Forward pass OK
+   Loss    : 1.4021
+   Logits  : torch.Size([8, 4])  (batch=8, classes=4)
+
+   Accuracy (1 batch) : 0.1250
+   F1 macro (1 batch) : 0.0556
+
+Ending Cell 17-----------------------------------------
+Executing Cell 18--------------------------------------
+Évaluation baseline complète (modèle pré-entraîné, sans fine-tuning)...
+
+
+\U0001f4ca Baseline DistilBERT (pré-entraîné, 0 fine-tuning) :
+   Loss     : 1.3856
+   Accuracy : 0.2700  (27.0%)
+   F1 Macro : 0.1862
+
+   Référence random chance : 0.2500 (25%)
+   \u2192 Le modèle pré-entraîné devrait déjà faire mieux que random
+
+Ending Cell 18-----------------------------------------
+Executing Cell 19--------------------------------------
+Ending Cell 19-----------------------------------------
+Executing Cell 20--------------------------------------
+\U0001f4cb Plan : 20 trials
+   Répartition : {'adamw': 7, 'sgd': 8, 'adafactor': 5}
+   Couverture garantie : 3 trials min par optimiseur
+
+
+     run_id  optimizer        lr  batch_size  warmup  epochs
+0   run_000      adamw  1.03e-05           8       0       3
+1   run_001        sgd  1.14e-06          16       0       3
+2   run_002      adamw  3.97e-05           8       0       3
+3   run_003        sgd  6.64e-06          16     100       2
+4   run_004        sgd  1.47e-05           8     100       3
+5   run_005      adamw  6.14e-06          16       0       3
+6   run_006      adamw  9.45e-05           8       0       2
+7   run_007        sgd  4.19e-05           8     500       2
+8   run_008  adafactor  4.04e-04           8     500       2
+9   run_009        sgd  7.03e-05           8       0       2
+10  run_010      adamw  3.46e-06           8     500       2
+11  run_011      adamw  1.50e-06          16     500       2
+12  run_012  adafactor  3.10e-06          16     100       3
+13  run_013        sgd  4.36e-05          16       0       3
+14  run_014        sgd  1.43e-06           8       0       2
+15  run_015        sgd  4.48e-05           8     500       3
+16  run_016  adafactor  1.77e-04          16       0       2
+17  run_017      adamw  2.64e-06           8     500       3
+18  run_018  adafactor  6.62e-06           8     100       2
+19  run_019  adafactor  1.70e-05          16     500       2
+Ending Cell 20-----------------------------------------
+Executing Cell 21--------------------------------------
+\U0001f680 Lancement Random Search — 20 trials (mode=cpu_mid)
+   Estimation : ~3-5h
+   Résultats sauvegardés dans results/logs/ au fur et à mesure
+
+
+[SEARCH] Préparation des données...
+
+[DATA] Chargement AG News...
+  Chargement AG News depuis HuggingFace...
+
+  Train : 120000 exemples
+  Test  : 7600 exemples
+[DATA] Sous-échantillonnage (mode: cpu)
+       Train : 100 × 4 classes = 400
+       Val   : 50 × 4 classes = 200
+       Test  : 50 × 4 classes = 200
+
+[DATA] Tokenisation avec distilbert-base-uncased (max_length=128)...
+
+[DATA] Datasets prêts \u2713
+[DATA] Stats sauvegardées \u2192 C:\Users\Ultra Tech\Desktop\audrey\ML OPTIMISATION\G05_AGNews\results\logs\data_stats.json
+
+[SEARCH] 20 trials à exécuter
+[SEARCH] Optimiseurs : ['adamw', 'sgd', 'adafactor']
+         adamw      \u2192 7 trials
+         sgd        \u2192 8 trials
+         adafactor  \u2192 5 trials
+
+[SEARCH] Trial 1/20
+
+=======================================================
+  Trial run_000 | optimizer=adamw | lr=1.03e-05
+  batch=8 | warmup=0 | epochs=3
+=======================================================
+
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+
+
+[TRAIN] Run run_000 | max_steps=100 | eval_steps=25
+
+Epoch 1:   0%|          | 0/50 [00:00<?, ?it/s]
+Epoch 1:   2%|\u258f         | 1/50 [00:02<01:53,  2.32s/it]
+Epoch 1:   2%|\u258f         | 1/50 [00:05<01:53,  2.32s/it, loss=1.3944, step=1]
+Epoch 1:   4%|\u258d         | 2/50 [00:05<02:22,  2.97s/it, loss=1.3944, step=1]
+Epoch 1:   6%|\u258c         | 3/50 [00:08<02:12,  2.83s/it, loss=1.3944, step=1]
+Epoch 1:   6%|\u258c         | 3/50 [00:12<02:12,  2.83s/it, loss=1.3801, step=2]
+Epoch 1:   8%|\u258a         | 4/50 [00:12<02:25,  3.17s/it, loss=1.3801, step=2]
+Epoch 1:  10%|\u2588         | 5/50 [00:14<02:12,  2.94s/it, loss=1.3801, step=2]
+Epoch 1:  10%|\u2588         | 5/50 [00:18<02:12,  2.94s/it, loss=1.3746, step=3]
+Epoch 1:  12%|\u2588\u258f        | 6/50 [00:18<02:20,  3.18s/it, loss=1.3746, step=3]
+Epoch 1:  14%|\u2588\u258d        | 7/50 [00:21<02:22,  3.31s/it, loss=1.3746, step=3]
+Epoch 1:  14%|\u2588\u258d        | 7/50 [00:27<02:22,  3.31s/it, loss=1.3703, step=4]
+Epoch 1:  16%|\u2588\u258c        | 8/50 [00:27<02:45,  3.95s/it, loss=1.3703, step=4]
+Epoch 1:  18%|\u2588\u258a        | 9/50 [00:30<02:28,  3.62s/it, loss=1.3703, step=4]
+Epoch 1:  18%|\u2588\u258a        | 9/50 [00:33<02:28,  3.62s/it, loss=1.3704, step=5]
+Epoch 1:  20%|\u2588\u2588        | 10/50 [00:33<02:25,  3.63s/it, loss=1.3704, step=5]
+Epoch 1:  22%|\u2588\u2588\u258f       | 11/50 [00:36<02:07,  3.27s/it, loss=1.3704, step=5]
+Epoch 1:  22%|\u2588\u2588\u258f       | 11/50 [00:39<02:07,  3.27s/it, loss=1.3658, step=6]
+Epoch 1:  24%|\u2588\u2588\u258d       | 12/50 [00:39<02:07,  3.35s/it, loss=1.3658, step=6]
+Epoch 1:  26%|\u2588\u2588\u258c       | 13/50 [00:42<01:53,  3.07s/it, loss=1.3658, step=6]
+Epoch 1:  26%|\u2588\u2588\u258c       | 13/50 [00:45<01:53,  3.07s/it, loss=1.3645, step=7]
+Epoch 1:  28%|\u2588\u2588\u258a       | 14/50 [00:45<01:56,  3.23s/it, loss=1.3645, step=7]
+Epoch 1:  30%|\u2588\u2588\u2588       | 15/50 [00:48<01:47,  3.08s/it, loss=1.3645, step=7]
+Epoch 1:  30%|\u2588\u2588\u2588       | 15/50 [00:52<01:47,  3.08s/it, loss=1.3623, step=8]
+Epoch 1:  32%|\u2588\u2588\u2588\u258f      | 16/50 [00:52<01:55,  3.40s/it, loss=1.3623, step=8]
+Epoch 1:  34%|\u2588\u2588\u2588\u258d      | 17/50 [00:55<01:45,  3.19s/it, loss=1.3623, step=8]
+Epoch 1:  34%|\u2588\u2588\u2588\u258d      | 17/50 [00:59<01:45,  3.19s/it, loss=1.3575, step=9]
+Epoch 1:  36%|\u2588\u2588\u2588\u258c      | 18/50 [00:59<01:48,  3.38s/it, loss=1.3575, step=9]
+Epoch 1:  38%|\u2588\u2588\u2588\u258a      | 19/50 [01:02<01:42,  3.31s/it, loss=1.3575, step=9]
+Epoch 1:  38%|\u2588\u2588\u2588\u258a      | 19/50 [01:06<01:42,  3.31s/it, loss=1.3549, step=10]
+Epoch 1:  40%|\u2588\u2588\u2588\u2588      | 20/50 [01:06<01:43,  3.46s/it, loss=1.3549, step=10]
+Epoch 1:  42%|\u2588\u2588\u2588\u2588\u258f     | 21/50 [01:08<01:35,  3.28s/it, loss=1.3549, step=10]
+Epoch 1:  42%|\u2588\u2588\u2588\u2588\u258f     | 21/50 [01:12<01:35,  3.28s/it, loss=1.3511, step=11]
+Epoch 1:  44%|\u2588\u2588\u2588\u2588\u258d     | 22/50 [01:12<01:33,  3.35s/it, loss=1.3511, step=11]
+Epoch 1:  46%|\u2588\u2588\u2588\u2588\u258c     | 23/50 [01:15<01:25,  3.15s/it, loss=1.3511, step=11]

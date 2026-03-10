@@ -1,0 +1,14 @@
+{
+  "train_size": 400,
+  "val_size": 200,
+  "test_size": 200,
+  "num_classes": 4,
+  "class_names": [
+    "World",
+    "Sports",
+    "Business",
+    "Sci/Tech"
+  ],
+  "max_length": 128,
+  "seed": 42
+}

@@ -1,0 +1,4 @@
+Backup Manifest — 20260310_105013
+Mode: cpu_low | Run: setup | Host: DESKTOP-95H2BGL
+Projet: /c/Users/Ultra Tech/Desktop/audrey/ML OPTIMISATION/G05_AGNews
+Méthode: cp/tar

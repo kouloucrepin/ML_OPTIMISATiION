@@ -1,0 +1,1 @@
+run_id,optimizer,lr,batch_size,warmup_steps,num_epochs,momentum,weight_decay,final_val_accuracy,final_val_f1,final_val_loss,best_val_f1,train_time_min,steps_done

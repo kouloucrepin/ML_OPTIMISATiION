@@ -1,0 +1,10 @@
+# Environment Snapshot â€” 20260310_105637
+PROJECT_ROOT=/c/Users/Ultra Tech/Desktop/audrey/ML OPTIMISATION/G05_AGNews
+MODE=cpu_mid
+RUN_TYPE=full
+BACKUP_ENABLED=true
+HOSTNAME=DESKTOP-95H2BGL
+PYTHON_VERSION=Python est introuvable ; exécutez sans arguments à installer à partir du Microsoft Store ou désactivez ce raccourci dans Paramètres > Applications > paramètres d
+TORCH_VERSION=N/A
+TRANSFORMERS_VERSION=N/A
+CUDA_AVAILABLE=N/A

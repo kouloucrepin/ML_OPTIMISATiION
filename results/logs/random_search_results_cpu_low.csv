@@ -1,0 +1,2 @@
+run_id,optimizer,lr,batch_size,warmup_steps,num_epochs,momentum,weight_decay,final_val_accuracy,final_val_f1,final_val_loss,best_val_f1,train_time_min,steps_done
+run_000,adamw,2.64e-06,8,50,2,0.85,2.9e-05,0.2917,0.2179,1.3776,0.2179,1.95,20

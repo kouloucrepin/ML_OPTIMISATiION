@@ -1,0 +1,63 @@
+{
+  "full_dataset": {
+    "train": {
+      "total": 120000,
+      "distribution": {
+        "World": 30000,
+        "Sports": 30000,
+        "Business": 30000,
+        "Sci/Tech": 30000
+      }
+    },
+    "test": {
+      "total": 7600,
+      "distribution": {
+        "World": 1900,
+        "Sports": 1900,
+        "Business": 1900,
+        "Sci/Tech": 1900
+      }
+    }
+  },
+  "undersampled_dataset": {
+    "config": {
+      "samples_per_class_train": 100,
+      "samples_per_class_val": 50,
+      "samples_per_class_test": 50,
+      "num_classes": 4,
+      "seed": 42,
+      "mode": "cpu_mid"
+    },
+    "train": {
+      "total": 400,
+      "distribution": {
+        "World": 100,
+        "Sports": 100,
+        "Business": 100,
+        "Sci/Tech": 100
+      }
+    },
+    "val": {
+      "total": 200,
+      "distribution": {
+        "World": 50,
+        "Sports": 50,
+        "Business": 50,
+        "Sci/Tech": 50
+      }
+    },
+    "test": {
+      "total": 200,
+      "distribution": {
+        "World": 50,
+        "Sports": 50,
+        "Business": 50,
+        "Sci/Tech": 50
+      }
+    }
+  },
+  "reduction_factor": {
+    "train": 0.33,
+    "test": 2.63
+  }
+}
