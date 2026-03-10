@@ -1,5 +1,4 @@
 dash==4.0.0
-datasets==4.4.2
 ipython==8.12.3
 matplotlib==3.10.8
 numpy==1.26.4
@@ -8,7 +7,5 @@ plotly==6.6.0
 scikit_learn==1.8.0
 scipy==1.17.1
 seaborn==0.13.2
-torch==2.2.2
 tqdm==4.67.1
-transformers==4.57.3
 auto_mix_prep==0.2.0
