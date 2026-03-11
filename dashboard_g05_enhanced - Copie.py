@@ -221,12 +221,12 @@ def empty_fig(T, title="Données non disponibles", msg=None, icon="📭"):
         text=f"<b>{icon}  {title}</b><br><span style='font-size:13px'>{msg or 'Lance le Random Search'}</span>",
         xref="paper",yref="paper",x=0.5,y=0.5,showarrow=False,
         font=dict(size=14,color=T["muted"],family=FONT),align="center")
-    fig.update_layout(**pb(T))
+    fig.update_layout(**pb(T),height=360)
     fig.update_xaxes(visible=False); fig.update_yaxes(visible=False)
     return fig
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 📈 VISUALISATIONS (sans hauteur fixe)
+# 📈 VISUALISATIONS
 # ══════════════════════════════════════════════════════════════════════════════
 
 def create_scatter_plot(T, metric="final_val_f1", show_trend=False):
@@ -249,7 +249,7 @@ def create_scatter_plot(T, metric="final_val_f1", show_trend=False):
             lr_r=np.logspace(ll.min(),ll.max(),100)
             fig.add_trace(go.Scatter(x=lr_r,y=p(np.log10(lr_r)),mode="lines",showlegend=False,
                 line=dict(color=T[opt],width=2,dash="dot"),hoverinfo="skip",opacity=0.45))
-    fig.update_layout(**pb(T),xaxis_type="log",xaxis_title="Learning Rate (log)",yaxis_title=yl,
+    fig.update_layout(**pb(T),xaxis_type="log",xaxis_title="Learning Rate (log)",yaxis_title=yl,height=480,
         title=dict(text=f"<b>{yl} vs Learning Rate</b><br><sub>⭐ = meilleur run</sub>",font=dict(size=15,color=T["text"])),
         legend=leg_h(T))
     return upd_ax(fig,T)
@@ -266,7 +266,7 @@ def create_heatmap(T, metric="final_val_f1"):
         hovertemplate="<b>%{y}</b><br>LR:%{x}<br>Max:%{z:.4f}<extra></extra>",zmin=0,zmax=1,
         colorbar=dict(tickfont=dict(size=11,color=T["muted"]),outlinewidth=0,len=0.7,
             bgcolor=T["surface"],title=dict(text=yl,font=dict(size=11,color=T["muted"])))))
-    fig.update_layout(**pb(T),xaxis_title="Plage LR",yaxis_title="",
+    fig.update_layout(**pb(T),xaxis_title="Plage LR",yaxis_title="",height=340,
         title=dict(text=f"<b>Heatmap {yl}</b><br><sub>Optimiseur × Plage LR</sub>",font=dict(size=15,color=T["text"])))
     return upd_ax(fig,T)
 
@@ -300,7 +300,7 @@ def create_convergence_plot(T, show_all=False):
                 mode="lines+markers",name=label,showlegend=False,line=dict(color=color,width=3),
                 marker=dict(size=8,color=color,line=dict(color=T["surface"],width=2)),
                 hovertemplate=f"{label}<br>F1:%{{y:.4f}}<extra></extra>"),row=1,col=2)
-    fig.update_layout(**pb(T),legend=leg_h(T),
+    fig.update_layout(**pb(T),height=460,legend=leg_h(T),
         title=dict(text="<b>Courbes de Convergence</b><br><sub>Meilleur run par optimiseur</sub>",font=dict(size=15,color=T["text"])))
     a=ax(T); fig.update_xaxes(**a,title_text="Steps"); fig.update_yaxes(**a)
     for ann in fig.layout.annotations: ann.font.update(size=13,color=T["text"])
@@ -317,7 +317,7 @@ def create_landscape_plot(T):
             hovertemplate=f"<b>{LABELS.get(opt,opt)}</b><br>α:%{{x:.3f}}<br>Loss:%{{y:.4f}}<extra></extra>"))
     fig.add_vline(x=0,line_dash="dash",line_color=T["faint"],line_width=2,
         annotation_text="θ* (α=0)",annotation_font=dict(size=12,color=T["muted"]),annotation_position="top")
-    fig.update_layout(**pb(T),xaxis_title="Direction (α)",yaxis_title="Loss",legend=leg_h(T),
+    fig.update_layout(**pb(T),xaxis_title="Direction (α)",yaxis_title="Loss",height=460,legend=leg_h(T),
         title=dict(text="<b>Loss Landscape 1D</b><br><sub>Li et al. (2018) Filter Normalization</sub>",font=dict(size=15,color=T["text"])))
     return upd_ax(fig,T)
 
@@ -333,7 +333,7 @@ def create_sharpness_plot(T):
     fig.add_annotation(x=ll[bi],y=vals[bi]*0.5,text="<b>Minimum<br>le plus plat</b>",showarrow=False,
         font=dict(color=T["success"],size=11,family=FONT),
         bgcolor=T["success_bg"],bordercolor=T["success"],borderwidth=1.5,borderpad=8)
-    fig.update_layout(**pb(T),yaxis_title="Sharpness",
+    fig.update_layout(**pb(T),yaxis_title="Sharpness",height=380,
         title=dict(text="<b>Sharpness par Optimiseur</b><br><sub>Keskar et al. (2017)</sub>",font=dict(size=15,color=T["text"])))
     return upd_ax(fig,T)
 
@@ -364,7 +364,7 @@ def create_sharpness_vs_performance(T):
         fig.add_trace(go.Scatter(x=[sharp],y=[sub["final_val_f1"].mean()],mode="markers",showlegend=False,
             marker=dict(color=color,size=16,symbol="diamond",line=dict(color=T["surface"],width=2))),row=1,col=2)
     a=ax(T); fig.update_xaxes(**a); fig.update_yaxes(**a)
-    fig.update_layout(**pb(T),showlegend=True,legend=leg_s(T),
+    fig.update_layout(**pb(T),height=480,showlegend=True,legend=leg_s(T),
         title=dict(text="<b>Sharpness vs Performance</b><br><sub>Keskar et al. (2017) | G05</sub>",font=dict(size=15,color=T["text"])))
     for ann in fig.layout.annotations: ann.font.update(size=12,color=T["text"])
     return fig
@@ -380,7 +380,7 @@ def create_boxplot(T, metric="final_val_f1"):
             marker=dict(color=T[opt],size=6,opacity=0.6,line=dict(color=T["surface"],width=0.8)),
             line_color=T[opt],fillcolor=T[opt+"_fill"],boxmean="sd",boxpoints="all",jitter=0.35,pointpos=0,
             hovertemplate="<b>%{fullData.name}</b><br>%{y:.4f}<extra></extra>"))
-    fig.update_layout(**pb(T),yaxis_title=yl,legend=leg_h(T),
+    fig.update_layout(**pb(T),yaxis_title=yl,height=440,legend=leg_h(T),
         title=dict(text=f"<b>Distribution {yl}</b><br><sub>Tous les trials</sub>",font=dict(size=15,color=T["text"])))
     return upd_ax(fig,T)
 
@@ -402,7 +402,7 @@ def create_correlation_matrix(T):
             hovertemplate="<b>%{y} vs %{x}</b><br>Corrélation:%{z:.3f}<extra></extra>",
             colorbar=dict(tickfont=dict(size=10,color=T["muted"]),outlinewidth=0,bgcolor=T["surface"],
                 title=dict(text="Corrélation",font=dict(size=11,color=T["muted"])))))
-        fig.update_layout(**pb(T),
+        fig.update_layout(**pb(T),height=500,
             title=dict(text="<b>Matrice de Corrélation</b><br><sub>Hyperparamètres et métriques</sub>",font=dict(size=15,color=T["text"])))
         fig.update_xaxes(side="bottom"); return upd_ax(fig,T)
     except Exception as e: return empty_fig(T,"Erreur",str(e)[:60])
@@ -423,7 +423,7 @@ def create_undersampling_chart(T):
                 textfont=dict(size=11,color=T["text"]),showlegend=False,
                 hovertemplate="<b>%{x}</b><br>Exemples:%{y:,}<extra></extra>"),row=1,col=ci)
         a=ax(T); fig.update_xaxes(**a); fig.update_yaxes(**a,title_text="Nombre d'exemples")
-        fig.update_layout(**pb(T),
+        fig.update_layout(**pb(T),height=400,
             title=dict(text="<b>Distribution Classes — Avant/Après Undersampling</b>",font=dict(size=15,color=T["text"])))
         for ann in fig.layout.annotations[:2]: ann.font.update(size=12,color=T["text"])
         return fig
@@ -455,7 +455,7 @@ def create_radar_chart(T):
                     tickfont=dict(size=10,color=T["muted"]),linecolor=T["border2"]),
                 angularaxis=dict(gridcolor=T["border"],linecolor=T["border2"],tickfont=dict(color=T["text_light"])),
                 bgcolor=T["plot_bg"]),
-            paper_bgcolor=T["paper_bg"],font=dict(family=FONT,color=T["text"],size=12),showlegend=True,
+            paper_bgcolor=T["paper_bg"],font=dict(family=FONT,color=T["text"],size=12),height=480,showlegend=True,
             legend=dict(bgcolor=T["surface"],bordercolor=T["border"],borderwidth=1,font=dict(color=T["text"])),
             title=dict(text="<b>Radar Chart Comparatif</b><br><sub>Normalisation 0→1</sub>",font=dict(size=15,color=T["text"])))
         return fig
@@ -509,7 +509,7 @@ def build_kpis():
              f"↑ {((best['final_val_f1']-avg)/avg*100):.1f}%"),
         card("Best Accuracy",f"{best['final_val_accuracy']:.4f}",f"Batch={int(best['batch_size'])}","--sgd","📊"),
         card("Meilleur Optimiseur",LABELS.get(opt,opt),"Par F1 Macro",av,"⚙️"),
-    ], className="kpi-container")  # ← ajout d'une classe pour le responsive
+    ],style={"display":"flex","gap":"18px","flexWrap":"nowrap","width":"100%"})
 
 def badge(text, status="success"):
     return html.Span(text,className=f"badge badge-{status}")
@@ -557,7 +557,6 @@ CSS_LIGHT = "\n".join(f"  {k}: {v};" for k,v in THEMES["light"].items() if k.sta
 CSS_DARK  = "\n".join(f"  {k}: {v};" for k,v in THEMES["dark"].items()  if k.startswith("--"))
 
 app.index_string = app.index_string.replace("</head>", f"""
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet">
 <style>
 /* ── CSS VARIABLES ────────────────────────────────────────────────────────── */
@@ -655,19 +654,11 @@ body {{
 .g05-main {{ max-width: 1440px; margin: 0 auto; padding: 36px 48px 56px; }}
 
 /* ── KPI CARDS ────────────────────────────────────────────────────────────── */
-.kpi-container {{
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-bottom: 32px;
-}}
 .kpi-card {{
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px; padding: 22px 26px;
-  flex: 1 1 200px; /* base width, will grow/shrink */
-  min-width: 200px;
+  flex: 1 1 0; min-width: 0;
   border-top: 4px solid var(--accent);
   box-shadow: 0 2px 12px var(--shadow);
   transition: transform 0.2s ease, box-shadow 0.2s ease,
@@ -740,32 +731,6 @@ body {{
 .option-label {{
   color: var(--text); font-size: 13px; font-weight: 700;
   margin-bottom: 10px; display: block; transition: color 0.3s ease;
-}}
-
-/* ── GRAPH CONTAINERS (responsive heights) ───────────────────────────────── */
-.dash-graph {{
-  height: 450px;
-  width: 100%;
-  margin-bottom: 20px;
-}}
-
-/* Pour les graphiques côte à côte dans l'onglet Overview */
-.graph-row {{
-  display: flex;
-  gap: 4%;
-  margin-bottom: 20px;
-}}
-.graph-col {{
-  width: 48%;
-}}
-@media (max-width: 600px) {{
-  .graph-row {{
-    flex-direction: column;
-    gap: 20px;
-  }}
-  .graph-col {{
-    width: 100%;
-  }}
 }}
 
 /* ── HR ───────────────────────────────────────────────────────────────────── */
@@ -918,133 +883,6 @@ body {{
 .dash-spreadsheet-container .dash-spreadsheet-inner td {{ transition: background 0.3s ease, color 0.3s ease; }}
 .dash-spreadsheet-container .dash-spreadsheet-inner th {{ transition: background 0.3s ease, color 0.3s ease; }}
 .Select-control, .Select-menu-outer {{ background: var(--surface) !important; color: var(--text) !important; border-color: var(--border) !important; }}
-
-/* ── RESPONSIVE MEDIA QUERIES ─────────────────────────────────────────────── */
-@media (max-width: 900px) {{
-  .g05-header-inner {{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }}
-  .g05-header-inner > div:last-child {{
-    align-self: flex-end;
-  }}
-  .g05-main {{
-    padding: 24px 24px;
-  }}
-  .kpi-card {{
-    padding: 18px 20px;
-  }}
-  .kpi-value {{
-    font-size: 22px;
-  }}
-}}
-
-@media (max-width: 600px) {{
-  .g05-header {{
-    padding: 12px 16px;
-  }}
-  .g05-header-inner {{
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }}
-  .g05-header-inner > div:first-child {{
-    flex-wrap: wrap;
-  }}
-  .g05-header-inner > div:last-child {{
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }}
-  .g05-logo {{
-    margin-right: 0;
-    margin-bottom: 4px;
-  }}
-  .g05-subtitle {{
-    font-size: 11px;
-    flex-wrap: wrap;
-  }}
-  .g05-main {{
-    padding: 16px 16px;
-  }}
-  /* KPIs : chaque carte prend toute la largeur */
-  .kpi-card {{
-    flex: 1 1 100%;
-    min-width: 100%;
-  }}
-  /* Tabs en défilement horizontal */
-  .tab-container .dash-tabs {{
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }}
-  .tab-container .dash-tab {{
-    display: inline-block;
-    float: none;
-    padding: 10px 14px;
-    font-size: 12px;
-  }}
-  .tab-content-area {{
-    padding: 20px 16px;
-  }}
-  /* Graphiques plus petits */
-  .dash-graph {{
-    height: 350px;
-  }}
-  /* Tableau : police plus petite */
-  .dash-spreadsheet td, .dash-spreadsheet th {{
-    font-size: 11px;
-    padding: 8px 10px;
-  }}
-  /* Footer en colonne */
-  .g05-footer {{
-    padding: 16px;
-    font-size: 11px;
-  }}
-  .g05-footer span {{
-    display: inline-block;
-    margin: 2px 0;
-  }}
-  /* FAB buttons plus petits */
-  .fab-btn, .fab-about {{
-    width: 50px;
-    height: 50px;
-    font-size: 22px;
-    right: 16px;
-  }}
-  .fab-about {{
-    top: calc(75vh - 66px);
-  }}
-  /* Modale */
-  .modal-box {{
-    max-width: 95%;
-    margin: 10px;
-  }}
-  .modal-header {{
-    padding: 20px 20px 0;
-  }}
-  .modal-body {{
-    padding: 20px;
-  }}
-  .modal-title {{
-    font-size: 18px;
-  }}
-  .modal-text {{
-    font-size: 13px;
-  }}
-}}
-
-@media (min-width: 601px) and (max-width: 900px) {{
-  /* KPIs : 2 par ligne */
-  .kpi-card {{
-    flex: 1 1 45%;
-    min-width: 45%;
-  }}
-  .dash-graph {{
-    height: 400px;
-  }}
-}}
 </style>
 </head>""")
 
@@ -1108,7 +946,7 @@ app.layout = html.Div([
 
     # Main
     html.Div([
-        html.Div(build_kpis(), className="fade-in"),  # le conteneur a déjà la classe kpi-container
+        html.Div(build_kpis(), style={"marginBottom":"32px"}, className="fade-in"),
         html.Div([
             dcc.Tabs(id="main-tabs", value="tab-overview",
                 style={"borderBottom":"1px solid var(--border)","background":"var(--surface)",
@@ -1264,7 +1102,7 @@ app.layout = html.Div([
 ], id="app-root", style={"minHeight":"100vh"})
 
 # ══════════════════════════════════════════════════════════════════════════════
-# 🔄 CALLBACKS (inchangés)
+# 🔄 CALLBACKS
 # ══════════════════════════════════════════════════════════════════════════════
 
 @app.callback(
@@ -1320,10 +1158,10 @@ def render_tab(tab, theme_name):
             html.Div([G("g-under", create_undersampling_chart(T))], style={"marginBottom":"32px"}),
             html.Div([
                 html.Div([G("g-radar", create_radar_chart(T) if HAS_SHARP else create_boxplot(T))],
-                         className="graph-col"),
+                         style={"width":"48%","display":"inline-block"}),
                 html.Div([G("g-corr-ov", create_correlation_matrix(T))],
-                         className="graph-col"),
-            ], className="graph-row"),
+                         style={"width":"48%","display":"inline-block","marginLeft":"4%"}),
+            ]),
             callout("L'undersampling garantit une représentation équitable. "+
                     ("Radar : normalisation 0→1." if HAS_SHARP else "Radar nécessite compute_landscape.py."),
                     "info" if HAS_SHARP else "warning"),
@@ -1359,9 +1197,9 @@ def render_tab(tab, theme_name):
             HR(),
             sh("Heatmaps Optimiseur × LR","Zones favorables par plage de learning rate"),
             html.Div([
-                html.Div([G("g-hm-f1",  create_heatmap(T,"final_val_f1"))],      className="graph-col"),
-                html.Div([G("g-hm-acc", create_heatmap(T,"final_val_accuracy"))], className="graph-col"),
-            ], className="graph-row"),
+                html.Div([G("g-hm-f1",  create_heatmap(T,"final_val_f1"))],      style={"width":"48%","display":"inline-block"}),
+                html.Div([G("g-hm-acc", create_heatmap(T,"final_val_accuracy"))], style={"width":"48%","display":"inline-block","marginLeft":"4%"}),
+            ]),
             callout("Valeur max par cellule. Vide = aucun trial.","info"),
         ])
     elif tab == "tab-advanced":
@@ -1433,6 +1271,4 @@ if __name__ == "__main__":
     print("  🌐 http://127.0.0.1:8050")
     print("  🎨 Toggle ☀️/🌙 → TOUT bascule : fond, header, KPIs, tabs, tableaux, graphiques")
     print("═"*70+"\n")
-    #app.run(debug=False, host="0.0.0.0", port=8050)
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=False, host="0.0.0.0", port=8050)
