@@ -47,7 +47,7 @@ La méthodologie repose sur un protocole de **Random Search** sur l'espace des h
 G05_AGNews/
 │
 ├── run_experiments.sh              ← Orchestrateur CLI principal
-├── requirements.txt                ← Dépendances Python (entraînement)
+├── requirements_project.txt                ← Dépendances Python (entraînement)
 ├── requirent_dash.txt              ← Dépendances Python (dashboard)
 ├── README.md                       ← Ce fichier
 ├── LICENSE                         ← Licence MIT
@@ -153,7 +153,7 @@ source venv/bin/activate
 
 # 4. Mettre à jour pip et installer les dépendances
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements_project.txt
 
 # 5. Vérifier l'installation
 python -c "import torch, transformers, datasets, dash; print('✅ Installation OK')"
@@ -490,7 +490,7 @@ source venv/bin/activate  # ou .\venv\Scripts\Activate.ps1 sur Windows
 
 # 3. Installer les dépendances d'entraînement
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements_project.txt
 
 # 4. Installer les dépendances du dashboard
 pip install -r requirent_dash.txt
